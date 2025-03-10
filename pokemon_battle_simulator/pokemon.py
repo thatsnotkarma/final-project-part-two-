@@ -64,4 +64,3 @@ class Pokemon:
             self.hp = 100  # Max HP limit
         print(f"{self.name} heals {amount} HP!")
         self.display_stats()
-

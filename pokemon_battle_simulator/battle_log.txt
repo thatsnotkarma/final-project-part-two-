@@ -1,19 +1,15 @@
 
 🔥 Ash vs Misty! Battle Start! 🔥
-Pikachu attacks Squirtle with Thunderbolt !
-Squirtle attacks Pikachu with 1!
-Pikachu attacks Squirtle with Electro Ball!
-Squirtle attacks Pikachu with Water Gun !
-Pikachu attacks Squirtle with Quick Attack !
-Squirtle attacks Pikachu with Water  Gun !
-Pikachu attacks Squirtle with Thunderbolt!
-Bulbasaur attacks Pikachu with Vine Whip!
+Squirtle attacks Charmander with Hydro Pump!
+Charmander attacks Squirtle with Flamethrower!
+Squirtle attacks Charmander with Hydro Pump!
+Pikachu attacks Squirtle with Quick Attack!
+Bulbasaur attacks Pikachu with Razor Leaf!
 Pikachu attacks Bulbasaur with Quick Attack!
 Bulbasaur attacks Pikachu with Vine Whip!
-Pikachu attacks Bulbasaur with Electro Ball!
-Bulbasaur attacks Pikachu with Razor Leaf!
-Charmander attacks Bulbasaur with Flamethrower!
-Rattata attacks Charmander with Hyper Fang!
-Charmander attacks Rattata with Flamethrower!
+Pidgey attacks Bulbasaur with Gust!
+Bulbasaur attacks Pidgey with Razor Leaf!
+Pidgey attacks Bulbasaur with Tackle!
+Bulbasaur attacks Pidgey with Vine Whip!
 
-🏆 Ash wins the battle! 🏆
+🏆 Misty wins the battle! 🏆

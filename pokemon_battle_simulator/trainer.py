@@ -1,31 +1,35 @@
 class Trainer:
     def __init__(self, name):
         self.name = name
-        self.team = []
+        self.pokemon_team = []
         self.active_pokemon = None
 
     def add_pokemon(self, pokemon):
-        if len(self.team) < 6:
-            self.team.append(pokemon)
-        else:
-            print(f"{self.name} already has 6 Pokémon!")
+        """Add a Pokémon to the trainer's team."""
+        self.pokemon_team.append(pokemon)
 
     def set_active_pokemon(self, pokemon):
-        if pokemon in self.team and not pokemon.is_fainted():
-            self.active_pokemon = pokemon
-        else:
-            print("Cannot set this Pokémon as active (either not in team or fainted).")
+        """Set the active Pokémon for the trainer."""
+        self.active_pokemon = pokemon
 
     def switch_pokemon(self):
-        available_pokemon = [p for p in self.team if not p.is_fainted() and p != self.active_pokemon]
+        """Switch the active Pokémon with another Pokémon from the team."""
+        print(f"{self.name}, choose a Pokémon to switch to:")
+        available_pokemon = [pokemon for pokemon in self.pokemon_team if not pokemon.is_fainted()]
+
         if not available_pokemon:
-            print(f"{self.name} has no Pokémon left to fight!")
-            self.active_pokemon = None  # Signal to battle that trainer has lost
-            return None
-        else:
-            print(f"{self.name}, choose a new Pokémon:")
-            for idx, p in enumerate(available_pokemon):
-                print(f"{idx + 1}. {p.name} (HP: {p.hp})")
-            choice = int(input("Enter the number of the Pokémon you want to switch to: ")) - 1
-            self.active_pokemon = available_pokemon[choice]
-            print(f"{self.name} switched to {self.active_pokemon.name}!")
+            print("All your Pokémon have fainted! You cannot switch.")
+            return  # End the switch attempt if all Pokémon are fainted
+
+        for i, pokemon in enumerate(available_pokemon, 1):
+            print(f"{i}. {pokemon.name}")
+
+        choice = input("Choose a Pokémon (1, 2, 3, ...): ")
+
+        while not choice.isdigit() or int(choice) < 1 or int(choice) > len(available_pokemon):
+            print("Invalid choice! Please choose a valid number.")
+            choice = input("Choose a Pokémon (1, 2, 3, ...): ")
+
+        # Set the new active Pokémon to the selected one
+        self.active_pokemon = available_pokemon[int(choice) - 1]
+        print(f"{self.name} switched to {self.active_pokemon.name}!")

@@ -9,17 +9,14 @@ class TestPokemonBattle(unittest.TestCase):
     def setUp(self):
         """Set up the test environment."""
         # Create test Pokémon
-        self.pikachu = Pokemon("Pikachu", 100, 50, 30, "Electric")
-        self.squirtle = Pokemon("Squirtle", 100, 40, 35, "Water")
-        self.bulbasaur = Pokemon("Bulbasaur", 100, 40, 40, "Grass")
+        self.pikachu = Pokemon("Pikachu", 100, 50, 30, "Electric", [])
+        self.squirtle = Pokemon("Squirtle", 100, 40, 35, "Water", [])
+        self.bulbasaur = Pokemon("Bulbasaur", 100, 40, 40, "Grass", [])
 
         # Add moves to Pokémon
-        self.pikachu.add_move("Thunderbolt", 30, "Electric")
-        self.pikachu.add_move("Quick Attack", 10, "Normal")
-        self.squirtle.add_move("Water Gun", 20, "Water")
-        self.squirtle.add_move("Bubble", 15, "Water")
-        self.bulbasaur.add_move("Vine Whip", 25, "Grass")
-        self.bulbasaur.add_move("Tackle", 10, "Normal")
+        self.pikachu.moves = ["Thunderbolt", "Quick Attack"]
+        self.squirtle.moves = ["Water Gun", "Bubble"]
+        self.bulbasaur.moves = ["Vine Whip", "Tackle"]
 
         # Create trainers
         self.ash = Trainer("Ash")
@@ -37,25 +34,25 @@ class TestPokemonBattle(unittest.TestCase):
     def test_attack_damage(self):
         """Test the attack damage calculation."""
         # Pikachu attacks Squirtle with Thunderbolt
-        self.pikachu.attack_pokemon(self.squirtle, "Thunderbolt")
+        self.pikachu.use_move("Thunderbolt", self.squirtle)
         self.assertTrue(self.squirtle.hp < 100, "Squirtle should take damage from Thunderbolt.")
 
         # Squirtle attacks Pikachu with Water Gun
-        self.squirtle.attack_pokemon(self.pikachu, "Water Gun")
+        self.squirtle.use_move("Water Gun", self.pikachu)
         self.assertTrue(self.pikachu.hp < 100, "Pikachu should take damage from Water Gun.")
 
     def test_type_advantage(self):
         """Test type effectiveness between Electric and Water."""
         # Pikachu attacks Squirtle with Thunderbolt (Electric vs Water)
         initial_hp = self.squirtle.hp
-        self.pikachu.attack_pokemon(self.squirtle, "Thunderbolt")
+        self.pikachu.use_move("Thunderbolt", self.squirtle)
         self.assertTrue(self.squirtle.hp < initial_hp, "Thunderbolt should do extra damage to Water-type Pokémon.")
 
     def test_pokemon_fainting(self):
         """Test if Pokémon faint when their HP reaches 0."""
         # Squirtle attacks Pikachu until fainted
         while self.pikachu.hp > 0:
-            self.squirtle.attack_pokemon(self.pikachu, "Water Gun")
+            self.squirtle.use_move("Water Gun", self.pikachu)
 
         self.assertTrue(self.pikachu.is_fainted(), "Pikachu should faint after enough damage.")
 
