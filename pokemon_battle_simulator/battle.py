@@ -2,6 +2,7 @@ from pokemon import Pokemon
 from trainer import Trainer
 from battle_log import BattleLog
 
+
 def run_battle(trainer1, trainer2):
     """Handles turn-based Pokémon battles between two trainers."""
     open(BattleLog.LOG_FILE, "w", encoding="utf-8").close()  # Clear log at start
@@ -9,7 +10,17 @@ def run_battle(trainer1, trainer2):
     BattleLog.log(f"\n🔥 {trainer1.name} vs {trainer2.name}! Battle Start! 🔥")
 
     while True:
-        # Trainer 1's turn
+        # Check if any trainer has no Pokémon left
+        if trainer1.active_pokemon is None or trainer1.active_pokemon.is_fainted():
+            print(f"\n🏆 {trainer2.name} wins the battle! 🏆")
+            BattleLog.log(f"\n🏆 {trainer2.name} wins the battle! 🏆")
+            break
+        if trainer2.active_pokemon is None or trainer2.active_pokemon.is_fainted():
+            print(f"\n🏆 {trainer1.name} wins the battle! 🏆")
+            BattleLog.log(f"\n🏆 {trainer1.name} wins the battle! 🏆")
+            break
+
+        # ------------------ Trainer 1's Turn ------------------
         if trainer1.active_pokemon.hp > 0:
             trainer1.active_pokemon.display_stats()  # Show stats
             print(f"\n{trainer1.name}'s turn! Active Pokémon: {trainer1.active_pokemon.name}")
@@ -29,14 +40,22 @@ def run_battle(trainer1, trainer2):
             elif choice == "2":
                 trainer1.switch_pokemon()
 
+            # Handle opponent fainting
             if trainer2.active_pokemon.is_fainted():
+                print(f"{trainer2.active_pokemon.name} has fainted!")
                 trainer2.switch_pokemon()
-                if trainer2.active_pokemon is None:
-                    print(f"\n🏆 {trainer1.name} wins the battle! 🏆")
-                    BattleLog.log(f"\n🏆 {trainer1.name} wins the battle! 🏆")
-                    break
 
-        # Trainer 2's turn
+        # Check again after Trainer 1's turn
+        if trainer1.active_pokemon is None:
+            print(f"\n🏆 {trainer2.name} wins the battle! 🏆")
+            BattleLog.log(f"\n🏆 {trainer2.name} wins the battle! 🏆")
+            break
+        if trainer2.active_pokemon is None:
+            print(f"\n🏆 {trainer1.name} wins the battle! 🏆")
+            BattleLog.log(f"\n🏆 {trainer1.name} wins the battle! 🏆")
+            break
+
+        # ------------------ Trainer 2's Turn ------------------
         if trainer2.active_pokemon.hp > 0:
             trainer2.active_pokemon.display_stats()  # Show stats
             print(f"\n{trainer2.name}'s turn! Active Pokémon: {trainer2.active_pokemon.name}")
@@ -56,17 +75,27 @@ def run_battle(trainer1, trainer2):
             elif choice == "2":
                 trainer2.switch_pokemon()
 
+            # Handle opponent fainting
             if trainer1.active_pokemon.is_fainted():
+                print(f"{trainer1.active_pokemon.name} has fainted!")
                 trainer1.switch_pokemon()
-                if trainer1.active_pokemon is None:
-                    print(f"\n🏆 {trainer2.name} wins the battle! 🏆")
-                    BattleLog.log(f"\n🏆 {trainer2.name} wins the battle! 🏆")
-                    break
 
-    BattleLog.display_log()  # Show the battle log at the end
+        # Final check after Trainer 2's turn
+        if trainer1.active_pokemon is None:
+            print(f"\n🏆 {trainer2.name} wins the battle! 🏆")
+            BattleLog.log(f"\n🏆 {trainer2.name} wins the battle! 🏆")
+            break
+        if trainer2.active_pokemon is None:
+            print(f"\n🏆 {trainer1.name} wins the battle! 🏆")
+            BattleLog.log(f"\n🏆 {trainer1.name} wins the battle! 🏆")
+            break
+
+    # Display battle log at end
+    BattleLog.display_log()
 
 
-# Example initialization
+# ------------------ Example initialization ------------------
+
 if __name__ == "__main__":
     ash = Trainer("Ash")
     misty = Trainer("Misty")
