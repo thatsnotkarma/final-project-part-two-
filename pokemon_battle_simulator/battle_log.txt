@@ -1,7 +1,1 @@
 🔥 Ash vs Misty! Battle Start! 🔥
-Pikachu uses Thunderbolt on Squirtle causing 20 damage.
-Squirtle uses Water Gun on Pikachu causing 50 damage.
-Pikachu uses Thunderbolt on Squirtle causing 0 damage.
-Bulbasaur uses Vine Whip on Pikachu causing 10 damage.
-Bulbasaur uses Razor Leaf on Charizard causing 40 damage.
-Charizard uses Flamethrower on Bulbasaur causing 0 damage.

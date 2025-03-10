@@ -32,6 +32,12 @@ class Pokemon:
             "Water Gun": 30,
             "Bubble": 20,
             "Hydro Pump": 60,
+            "Waterfall": 50,
+            "Rapid Spin": 30,
+            "Confusion": 50,
+            "Physics": 60,
+            "Peck": 20,
+            "Horn Attack": 30,
             "Vine Whip": 35,
             "Tackle": 15,
             "Razor Leaf": 45,
@@ -41,6 +47,9 @@ class Pokemon:
             "Gust": 35,
             "Hyper Fang": 50,
             "Bite": 40,
+            "Pound": 30,
+            "Play Rough": 40,
+            "Double Slap": 40,
         }
 
         if move_name not in move_powers:
