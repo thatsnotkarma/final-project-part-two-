@@ -9,3 +9,10 @@ Files:
 - trainer.py → Defines the Trainer class.
 - battle_log.py → Handles logging battle events.
 - battle_log.txt → Stores battle history.
+
+How to Run:
+1. Make sure all .py files and battle_log.txt are in the same folder.
+2. Open your terminal/command prompt.
+3. Navigate to the folder where files are located.
+4. Run the game with the following command:
+   python battle.py
