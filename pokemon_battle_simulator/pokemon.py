@@ -1,29 +1,30 @@
 class Pokemon:
     def __init__(self, name, hp, attack, defense, element, moves):
         self.name = name
-        self.hp = hp
+        self.hp = 80  # Set base HP to 80 instead of the original value
         self.attack = attack
         self.defense = defense
         self.element = element
         self.moves = moves  # This will be a list of move names
 
     def type_effectiveness(self, opponent):
-        """Returns a multiplier based on the type effectiveness."""
+        """Returns a flat bonus damage based on type effectiveness."""
+        # Adjusted type chart (added weaknesses that will give +10 damage)
         type_chart = {
-            ("Fire", "Grass"): 2,
-            ("Water", "Fire"): 2,
-            ("Grass", "Water"): 2,
-            ("Electric", "Water"): 2,
-            # Other type combinations can be added here
+            ("Fire", "Grass"): 10,  # Fire is strong against Grass
+            ("Water", "Fire"): 10,  # Water is strong against Fire
+            ("Grass", "Water"): 10,  # Grass is strong against Water
+            ("Electric", "Water"): 10,  # Electric is strong against Water
+            # You can add more type advantages here if needed
         }
 
-        # Check if the move's type has an advantage
-        multiplier = type_chart.get((self.element, opponent.element), 1)
-        return multiplier
+        # Check if the move's type has an advantage and return bonus damage
+        bonus_damage = type_chart.get((self.element, opponent.element), 0)
+        return bonus_damage
 
     def use_move(self, move_name, opponent):
         """Calculates and applies damage from the Pokémon's move."""
-        # Dictionary for moves and their power
+        # Dictionary for moves and their base power
         move_powers = {
             "Thunderbolt": 40,
             "Quick Attack": 20,
@@ -47,10 +48,19 @@ class Pokemon:
             return
 
         move_power = move_powers[move_name]
-        type_multiplier = self.type_effectiveness(opponent)
+        type_bonus = self.type_effectiveness(opponent)
 
-        # Apply the type advantage
-        damage = (move_power * self.attack * type_multiplier) // (opponent.defense + 1)
+        # Check if the move is super effective
+        if type_bonus > 0:
+            print(f"Super effective! {self.name} uses {move_name}!")
+
+        # Reduce damage formula to avoid one-shots and add type bonus
+        damage = (move_power + (self.attack // 2) - (opponent.defense // 2)) + type_bonus
+
+        # Ensure no negative damage
+        if damage < 0:
+            damage = 0
+
         opponent.hp -= damage
 
         print(f"{self.name} uses {move_name}! {opponent.name} takes {damage} damage.")
