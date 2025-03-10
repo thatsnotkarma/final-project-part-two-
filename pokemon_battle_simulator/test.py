@@ -66,11 +66,12 @@ class TestPokemonBattle(unittest.TestCase):
 
     def test_battle_log(self):
         """Test if the battle log records the actions."""
-        BattleLog.log("Test log entry")
+        BattleLog.log(self.pikachu, "Thunderbolt", self.squirtle, 30)
         with open(BattleLog.LOG_FILE, "r", encoding="utf-8") as log_file:
             log_contents = log_file.read()
 
-        self.assertIn("Test log entry", log_contents, "Battle log should contain the test log entry.")
+        self.assertIn("Thunderbolt", log_contents, "Battle log should contain the move Thunderbolt.")
+        self.assertIn(str(30), log_contents, "Battle log should contain the damage dealt.")
 
     def tearDown(self):
         """Clean up after tests."""

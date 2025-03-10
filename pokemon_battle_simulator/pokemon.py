@@ -5,19 +5,25 @@ class Pokemon:
         self.attack = attack
         self.defense = defense
         self.element = element
-        self.moves = moves
+        self.moves = moves  # This will be a list of move names
 
-    def display_stats(self):
-        """Displays the current stats of the Pokémon."""
-        print(f"{self.name}: HP={self.hp}, Attack={self.attack}, Defense={self.defense}, Element={self.element}")
+    def type_effectiveness(self, opponent):
+        """Returns a multiplier based on the type effectiveness."""
+        type_chart = {
+            ("Fire", "Grass"): 2,
+            ("Water", "Fire"): 2,
+            ("Grass", "Water"): 2,
+            ("Electric", "Water"): 2,
+            # Other type combinations can be added here
+        }
 
-    def is_fainted(self):
-        """Checks if the Pokémon has fainted (HP <= 0)."""
-        return self.hp <= 0
+        # Check if the move's type has an advantage
+        multiplier = type_chart.get((self.element, opponent.element), 1)
+        return multiplier
 
     def use_move(self, move_name, opponent):
         """Calculates and applies damage from the Pokémon's move."""
-        # Simple move power values (these could be more complex based on move types)
+        # Dictionary for moves and their power
         move_powers = {
             "Thunderbolt": 40,
             "Quick Attack": 20,
@@ -36,31 +42,26 @@ class Pokemon:
             "Bite": 40,
         }
 
-        # Make sure the move exists
         if move_name not in move_powers:
             print(f"{move_name} is not a valid move!")
             return
 
-        # Get the move power
         move_power = move_powers[move_name]
+        type_multiplier = self.type_effectiveness(opponent)
 
-        # Calculate damage using a simplified formula:
-        # Damage = (Move Power * Attack / Defense) - opponent's defense effect
-        damage = (move_power * self.attack) // (opponent.defense + 1)  # Avoid division by zero
-
-        # Apply the damage
+        # Apply the type advantage
+        damage = (move_power * self.attack * type_multiplier) // (opponent.defense + 1)
         opponent.hp -= damage
 
-        # Display the damage dealt
         print(f"{self.name} uses {move_name}! {opponent.name} takes {damage} damage.")
         if opponent.hp < 0:
             opponent.hp = 0
         opponent.display_stats()
 
-    def heal(self, amount):
-        """Heals the Pokémon by a specified amount."""
-        self.hp += amount
-        if self.hp > 100:
-            self.hp = 100  # Max HP limit
-        print(f"{self.name} heals {amount} HP!")
-        self.display_stats()
+    def is_fainted(self):
+        """Check if the Pokémon has fainted (HP <= 0)."""
+        return self.hp <= 0
+
+    def display_stats(self):
+        """Display the current stats of the Pokémon."""
+        print(f"{self.name} | HP: {self.hp} | Type: {self.element}")
